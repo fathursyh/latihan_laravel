@@ -1,11 +1,13 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 
 Route::get('/', function () {
     return view('home', [
+        'header' => 'Home',
         'title' => 'Home',
         'nama' => 'Ganteng',
     ]);
@@ -13,11 +15,29 @@ Route::get('/', function () {
 
 Route::get('/about', function () {
     return view('about', [
-        'title'=> 'About',
+        'header'=> 'About',
+        'title' => 'About',
     ]);
 });
 
 
 // POST PAGE w/ controller
 Route::get('/posts', [PostController::class, 'index']);
-Route::get('posts/{post}', [PostController::class,'show']);
+Route::get('posts/{post:slug}', [PostController::class,'show']);
+
+Route::get('/categories', function () {
+    return view('categories', [
+        'title' => 'Categories',
+        'header' => 'Categories',
+        'categories' => Category::all()
+    ]);
+});
+
+Route::get('/categories/{category:slug}', function (Category $category) {
+    return view('category', [
+        'title' => $category->name,
+        'header' => 'Categories',
+        'posts'=> $category->posts,
+        'category' => $category->name
+    ]);
+});

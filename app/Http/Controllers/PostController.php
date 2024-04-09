@@ -9,14 +9,16 @@ class PostController extends Controller
 {
     public function index() {
         return view('posts', [
-            'title'=> 'Posts',
+            'header'=> 'Posts',
+            'title' => 'Posts',
             'posts'=> Post::all(),
         ]);
     }
 
     public function show(Post $post) {
         return view('post', [
-            'title'=> 'tes',
+            'header'=> 'Posts',
+            'title' => $post->title,
             'post'=> $post,
         ]);
     }
