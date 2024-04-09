@@ -16,9 +16,6 @@
     </section>
 
 
-
-
-
     <script src="js/script.js"></script>
     <script>
         window.onload = function() {
