@@ -4,6 +4,7 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('home', [
@@ -39,5 +40,21 @@ Route::get('/categories/{category:slug}', function (Category $category) {
         'header' => 'Categories',
         'posts'=> $category->posts,
         'category' => $category->name
+    ]);
+});
+
+Route::get('/authors', function () {
+    return view('authors', [
+        'header' => 'Authors',
+        'title' => 'User Posts',
+        'authors' => User::all(),
+    ]);
+});
+
+Route::get('/authors/{author:username}', function (User $author) {
+    return view('posts', [
+        'header' => 'Authors',
+        'title' => $author->name,
+        'posts' => $author->posts->load('author', 'slug', 'category'),
     ]);
 });
