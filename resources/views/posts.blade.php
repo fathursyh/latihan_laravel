@@ -4,12 +4,14 @@
 @section('body')
 <h1>{{ $title }}</h1>
 @if ($posts->count() > 0)
-<div class="card mb-3">
-    <img src="..." class="card-img-top" alt="...">
+<div class="card mb-5">
+    <img src="https://source.unsplash.com/1200x400?{{ $posts[0]->category->name }}" class="card-img-top" alt="..." >
     <div class="card-body">
-      <h5 class="card-title">Card title</h5>
-      <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-      <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>
+      <h3 class="card-title">{{ $posts[0]->title }}</h3>
+      <h5>By : <a href="/authors/{{ $posts[0]->author->username }}">{{ $posts[0]->author->name }}</a> in <a href="/categories/{{ $posts[0]->category->slug }}">{{ $posts[0]->category->name }}</a></h5>
+      <p class="card-text">{{ substr($posts[0]->body, 0, 180) }}..</p>
+      <a href="/posts/{{ $posts[0]->slug }}" class="btn btn-primary">Read More</a>
+      <p class="card-text text-end"><small class="text-body-secondary">{{ $posts[0]->created_at->diffForHumans() }}</small></p>
     </div>
   </div>  
 @else
@@ -18,13 +20,15 @@
 
 
 
-@foreach ($posts as $post)
+@foreach ($posts->skip(1) as $post)
 <article class="mb-5 border-bottom">
-    <h2><a href="/posts/{{ $post->slug }}">{{ $post->title }}</a></h2>
+    <h4><a href="/posts/{{ $post->slug }}">{{ $post->title }}</a></h4>
     <h5>By : <a href="/authors/{{ $post->author->username }}">{{ $post->author->name }}</a> in <a href="/categories/{{ $post->category->slug }}">{{ $post->category->name }}</a></h5>
 
     <p class="mb-1"><?= substr($post->body, 0, 180) . ' ...' ?></p>
-    <p class="text-end mt-0"><a href="/posts/{{ $post->slug }}">Read More</a></p>
+    <p class="mt-0"><a href="/posts/{{ $post->slug }}">Read More</a></p>
+    <p class="text-end"><small class="text-body-secondary">Published 3 mins ago</small></p>
+
 </article>
 @endforeach
 
