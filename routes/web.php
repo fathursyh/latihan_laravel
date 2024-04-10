@@ -55,6 +55,6 @@ Route::get('/authors/{author:username}', function (User $author) {
     return view('posts', [
         'header' => 'Authors',
         'title' => $author->name,
-        'posts' => $author->posts->load('author', 'slug', 'category'),
+        'posts' => $author->posts->load('author', 'category'),
     ]);
 });
