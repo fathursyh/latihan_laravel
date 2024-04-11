@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\RegisterController;
 use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Route;
@@ -41,3 +43,7 @@ Route::get('/authors', function () {
         'authors' => User::all(),
     ]);
 });
+
+Route::get('/login', [LoginController::class, 'index']);
+Route::get('/register', [RegisterController::class, 'save']);
+Route::post('/register', [RegisterController::class, 'store']);
