@@ -7,22 +7,40 @@
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link {{ Request::is('/') ? 'active' : '' }}" href="/">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/about">About</a>
+                <a class="nav-link {{ Request::is('about') ? 'active' : '' }}" href="/about">About</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/posts">Posts</a>
+                <a class="nav-link {{ Request::is('posts') ? 'active' : '' }}" href="/posts">Posts</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/categories">Categories</a>
+                <a class="nav-link {{ Request::is('categories') ? 'active' : '' }}" href="/categories">Categories</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="/authors">Authors</a>
+                <a class="nav-link {{ Request::is('authors') ? 'active' : '' }}" href="/authors">Authors</a>
               </li>
             </ul>
+
             <ul class="navbar-nav ms-auto">
+            @auth
+             <li class="nav-item dropdown">
+              <a href="" class="nav-link dropdown-toggle {{ Request::is('*/dashboard') ? 'active' : '' }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{ auth()->user()->username }}
+              </a>
+              <ul class="dropdown-menu">
+                <li><a href="/{{ auth()->user()->username }}/posts" class="dropdown-item">My Posts</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li>
+                  <form action="/logout" method="post">
+                    @csrf
+                    <button type="submit" class="dropdown-item">Logout</button>
+                  </form>
+                </li>
+              </ul>
+             </li>  
+            @else
               <li class="nav-item">
                 <a href="/login" class="nav-link active">
                   <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
@@ -31,7 +49,9 @@
                   </svg> Login
                 </a>
               </li>
-            </ul>
+              @endauth
+            </ul>  
+        
           </div>
         </div>
       </nav>

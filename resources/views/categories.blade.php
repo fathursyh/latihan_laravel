@@ -2,7 +2,7 @@
 
 
 @section('body')
-<h1 class="mb-5">{{ $header }}</h1>
+<h1 class="mb-5">{{ $title }}</h1>
 <ul>
 @foreach ($categories as $category)
     <li>

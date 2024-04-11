@@ -2,7 +2,7 @@
 
 
 @section('body')
-<h1 class="mb-5">{{ $header }}</h1>
+<h1 class="mb-5">Authors</h1>
 <ul>
 @foreach ($authors as $author)
     <li>
