@@ -36,6 +36,7 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
+        return $request->file('image')->store('post-images');
         $validated = $request->validate([
             'title' => 'required|max:255',
             'slug' => 'unique:post',
@@ -45,7 +46,7 @@ class DashboardController extends Controller
 
         $validated['user_id'] = auth()->user()->id;
         Post::create($validated);
-        return redirect(auth()->user()->username    .'/posts')->with('success', 'New post added successfully');
+        return redirect(auth()->user()->username .'/posts')->with('success', 'New post added successfully');
     }
 
     /**
@@ -62,25 +63,42 @@ class DashboardController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit($user, Post $post)
     {
-        //
+        return view('dashboard.edit', [
+            'title'=> 'Create Post',
+            'post' => $post,
+            'categories' => Category::all()
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update($user, Request $request, Post $post)
     {
-        //
+        $rules = ([
+            'title' => 'required|max:255',
+            'category_id'=> 'required',
+            'body'=> 'required',
+        ]);
+        if($request['slug'] != $post->slug){
+            $rules['slug'] = 'unique:posts';
+        }
+
+        $validated = $request->validate($rules);
+        $validated['user_id'] = auth()->user()->id;
+        Post::where('id', $post->id)->update($validated);
+        return redirect(auth()->user()->username .'/posts')->with('success', 'Post has been updated!');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy($user, Post $post)
     {
-        //
+        Post::destroy($post->id);
+        return redirect(auth()->user()->username .'/posts')->with('success', 'Post Deleted Successfully!');
     }
 
     public function checkSlug(Request $request) {

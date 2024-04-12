@@ -10,7 +10,7 @@
         <article class="my-3">
             {!! $post->body !!}
         </article>
-        <a href="/posts">Back</a>
+        <a href="/{{ auth()->user()->username }}/posts">Back</a>
 </div>
 
     @endsection

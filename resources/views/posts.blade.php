@@ -2,7 +2,8 @@
 
 
 @section('body')
-<h1 class="text-center">{{ $title }}</h1>
+<div class="col-8">
+  <h1 class="text-center">{{ $title }}</h1>
 
 <div class="row justify-content-center mb-3">
   <div class="col-md-6">
@@ -30,10 +31,10 @@
       <a href="/posts/{{ $posts[0]->slug }}" class="btn btn-primary">Read More</a>
       <p class="card-text text-end"><small class="text-body-secondary">{{ $posts[0]->created_at->diffForHumans() }}</small></p>
     </div>
-  </div>  
+</div>  
 
 @foreach ($posts->skip(1) as $post)
-<article class="mb-5 border-bottom">
+<article class="mb-5 border">
     <h4><a href="/posts/{{ $post->slug }}">{{ $post->title }}</a></h4>
     <h5>By : <a href="/posts?author={{ $post->author->username }}">{{ $post->author->name }}</a> in <a href="posts?category={{ $post->category->slug }}">{{ $post->category->name }}</a></h5>
 
@@ -45,10 +46,12 @@
 @endforeach
 @else
 <p class="text-center fs-4">No Posts Found.</p> 
-@endif
+@endif 
+
 
 <div class="d-flex justify-content-end">
   {{ $posts->links() }}
+</div>
 </div>
 
 

@@ -2,8 +2,8 @@
 
 @section('body')
     <div class="col-lg-8">
-        <h1 class="h2">Create New Post</h1>
-        <form action="/{{ auth()->user()->username }}/posts" method="post" enctype="multipart/form-data">
+        <h1 class="h2">Crete New Post</h1>
+        <form action="/{{ auth()->user()->username }}/posts" method="post">
             @csrf
             <div class="mb-3">
                 <label for="title" class="form-label">Title</label>
@@ -32,11 +32,6 @@
                     @endforeach
                 </select>
             </div>
-            {{-- file upload --}}
-            <div class="mb-3">
-                <label for="image" class="form-label">Upload header image</label>
-                <input class="form-control" type="file" id="image" name="image">
-              </div>
             <div class="mt-5">
                 <input id="blogBody" type="hidden" name="body" value="{{ old('body') }}">
                 <trix-editor input="blogBody"></trix-editor>

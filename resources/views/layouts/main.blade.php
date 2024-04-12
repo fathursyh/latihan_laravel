@@ -43,13 +43,9 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script>
     <script src="{{ asset('js/script.js') }}"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
     @auth
         
     <script>
-        
-        feather.replace();
-
         const title = document.querySelector('#title');
         const slug = document.querySelector('#slug');
         let username = "{{ auth()->user()->username }}"
