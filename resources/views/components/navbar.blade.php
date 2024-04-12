@@ -26,7 +26,7 @@
             <ul class="navbar-nav ms-auto">
             @auth
              <li class="nav-item dropdown">
-              <a href="" class="nav-link dropdown-toggle {{ Request::is('*/dashboard') ? 'active' : '' }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a href="" class="nav-link dropdown-toggle {{ Request::is('*/posts') ? 'active' : '' }}" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 {{ auth()->user()->username }}
               </a>
               <ul class="dropdown-menu">

@@ -4,6 +4,11 @@
 <div class="col-12 col-lg-8 px-3">
     <h1 class="my-5">{{ auth()->user()->username }}'s posts</h1>
     <a href="/{{ auth()->user()->username }}/posts/create" class="btn btn-primary">Create New Post</a>
+    @if (session()->has('success')) {{-- ALERT SUCCESS --}}
+    <div class="alert alert-success" role="alert">
+        {{ session('success') }}
+      </div>
+    @endif
     <table class="table table-hover">
         <thead>
             <tr>

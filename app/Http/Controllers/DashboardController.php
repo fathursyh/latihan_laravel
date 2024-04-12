@@ -38,10 +38,14 @@ class DashboardController extends Controller
     {
         $validated = $request->validate([
             'title' => 'required|max:255',
-            'slug' => 'required|unique:post',
+            'slug' => 'unique:post',
             'category_id'=> 'required',
             'body'=> 'required',
         ]);
+
+        $validated['user_id'] = auth()->user()->id;
+        Post::create($validated);
+        return redirect(auth()->user()->username    .'/posts')->with('success', 'New post added successfully');
     }
 
     /**

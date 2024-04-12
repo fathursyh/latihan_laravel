@@ -26,7 +26,7 @@
     <div class="card-body">
       <h3 class="card-title">{{ $posts[0]->title }}</h3>
       <h5>By : <a href="/posts?author={{ $posts[0]->author->username }}">{{ $posts[0]->author->name }}</a> in <a href="/posts?category={{ $posts[0]->category->slug }}">{{ $posts[0]->category->name }}</a></h5>
-      <p class="card-text">{!! substr($posts[0]->body, 0, 250) !!}..</p>
+      <p class="card-text">{!! Str::limit($posts[0]->body, 150, '...') !!}</p>
       <a href="/posts/{{ $posts[0]->slug }}" class="btn btn-primary">Read More</a>
       <p class="card-text text-end"><small class="text-body-secondary">{{ $posts[0]->created_at->diffForHumans() }}</small></p>
     </div>
@@ -37,7 +37,7 @@
     <h4><a href="/posts/{{ $post->slug }}">{{ $post->title }}</a></h4>
     <h5>By : <a href="/posts?author={{ $post->author->username }}">{{ $post->author->name }}</a> in <a href="posts?category={{ $post->category->slug }}">{{ $post->category->name }}</a></h5>
 
-    <p class="mb-1"><?= substr($post->body, 0, 180) . ' ...' ?></p>
+    <p class="mb-1">{!! Str::limit($posts[0]->body, 150, '...') !!}</p>
     <p class="mt-0"><a href="/posts/{{ $post->slug }}">Read More</a></p>
     <p class="text-end"><small class="text-body-secondary">Published 3 mins ago</small></p>
 

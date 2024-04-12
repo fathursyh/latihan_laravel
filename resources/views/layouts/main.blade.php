@@ -44,7 +44,10 @@
     </script>
     <script src="{{ asset('js/script.js') }}"></script>
     <script src="https://unpkg.com/feather-icons"></script>
+    @auth
+        
     <script>
+        
         feather.replace();
 
         const title = document.querySelector('#title');
@@ -60,6 +63,7 @@
             e.preventDefault();
         });
     </script>
+    @endauth
 
 </body>
 
