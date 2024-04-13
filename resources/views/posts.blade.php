@@ -23,7 +23,13 @@
 </div>
 @if ($posts->count() > 0)
 <div class="card mb-5">
-    <img src="https://source.unsplash.com/1200x400?{{ $posts[0]->category->name }}" class="card-img-top" alt="..." >
+  @if ($posts[0]->image)
+  <div style="max-height: 400px; overflow: hidden; ">
+      <img src="{{ asset('storage/' . $posts[0]->image) }}" class="img-fluid " alt="...">
+  </div>
+  @else
+  <img src="https://source.unsplash.com/1200x400?{{ $posts[0]->category->name }}" class="img-fluid" alt="...">
+  @endif
     <div class="card-body">
       <h3 class="card-title">{{ $posts[0]->title }}</h3>
       <h5>By : <a href="/posts?author={{ $posts[0]->author->username }}">{{ $posts[0]->author->name }}</a> in <a href="/posts?category={{ $posts[0]->category->slug }}">{{ $posts[0]->category->name }}</a></h5>
@@ -38,7 +44,7 @@
     <h4><a href="/posts/{{ $post->slug }}">{{ $post->title }}</a></h4>
     <h5>By : <a href="/posts?author={{ $post->author->username }}">{{ $post->author->name }}</a> in <a href="posts?category={{ $post->category->slug }}">{{ $post->category->name }}</a></h5>
 
-    <p class="mb-1">{!! Str::limit($posts[0]->body, 150, '...') !!}</p>
+    <p class="mb-1">{!! Str::limit($post->body, 150, '...') !!}</p>
     <p class="mt-0"><a href="/posts/{{ $post->slug }}">Read More</a></p>
     <p class="text-end"><small class="text-body-secondary">Published 3 mins ago</small></p>
 

@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Models\Post;
 use Cviebrock\EloquentSluggable\Services\SlugService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DashboardController extends Controller
 {
@@ -36,13 +37,18 @@ class DashboardController extends Controller
      */
     public function store(Request $request)
     {
-        return $request->file('image')->store('post-images');
+        // return $request->file('image')->store('post-images');
         $validated = $request->validate([
             'title' => 'required|max:255',
             'slug' => 'unique:post',
             'category_id'=> 'required',
+            'image' => 'image|file|max:2048',
             'body'=> 'required',
         ]);
+        
+        if($request->file('image')) {
+            $validated['image'] = $request->file('image')->store('post-images');
+        }
 
         $validated['user_id'] = auth()->user()->id;
         Post::create($validated);
@@ -80,6 +86,7 @@ class DashboardController extends Controller
         $rules = ([
             'title' => 'required|max:255',
             'category_id'=> 'required',
+            'image' => 'image|file|max:2048',
             'body'=> 'required',
         ]);
         if($request['slug'] != $post->slug){
@@ -87,6 +94,14 @@ class DashboardController extends Controller
         }
 
         $validated = $request->validate($rules);
+
+        if($request->file('image')) {
+            if($request->oldImage){
+                Storage::delete($request->oldImage);
+            }
+            $validated['image'] = $request->file('image')->store('post-images');
+        }
+
         $validated['user_id'] = auth()->user()->id;
         Post::where('id', $post->id)->update($validated);
         return redirect(auth()->user()->username .'/posts')->with('success', 'Post has been updated!');
@@ -97,6 +112,9 @@ class DashboardController extends Controller
      */
     public function destroy($user, Post $post)
     {
+        if($post->image){
+            Storage::delete($post->image);
+        }
         Post::destroy($post->id);
         return redirect(auth()->user()->username .'/posts')->with('success', 'Post Deleted Successfully!');
     }
